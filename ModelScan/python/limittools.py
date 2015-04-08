@@ -2,7 +2,7 @@
 import commands,sys,os,subprocess,ROOT,numpy
 from array import array
 
-def runlimitFile(card='card.txt',limitdty='/afs/cern.ch/user/p/pharris/pharris/public/bacon/prod/'):
+def runlimitFile(card='card.txt',basedir='/afs/cern.ch/user/p/pharris/pharris/public/bacon/prod/'):
    sub_file = open('runlimit.sh','w')
    sub_file.write('#!/bin/bash\n')
    sub_file.write('cd %s \n'% basedir)
@@ -47,12 +47,12 @@ def rescalesignal(card='card.txt',scale=1):
                fout.write(line.replace(pFile, 'rescale'+pFile))
       os.system('cp %s %s' % ('Xrescale'+card,'rescale'+card))
 
-def runlimit(card='card.txt',limitdty='/afs/cern.ch/user/p/pharris/pharris/public/bacon/prod/'):
-   runlimitFile(card,limitdty)
+def runlimit(card='card.txt',basedir='/afs/cern.ch/user/p/pharris/pharris/public/bacon/prod/'):
+   runlimitFile(card,basedir)
    scale=checkrange()
    if scale > 100 or scale < 0.05:
       rescalesignal(card,scale)
-      runlimitFile('rescale'+card,limitdty)
+      runlimitFile('rescale'+card,basedir)
       return scale
    return 1
 

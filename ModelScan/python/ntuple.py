@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 import commands,sys,os,subprocess,ROOT,numpy,math
-from BaconAna.Utils.generate import getWidthXS
+from MonoX.ModelScan.generate import getWidthXS
 from optparse import OptionParser
 import ROOT as r
 
