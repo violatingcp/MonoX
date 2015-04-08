@@ -12,7 +12,7 @@ parser.add_option('--width',action='store',type='float',dest='width' ,default=1,
 parser.add_option('--proc' ,action='store',type='float',dest='proc'  ,default=806, help='Process(800=V,801=A,805=S,806=P)')
 parser.add_option('--gq'   ,action='store',type='float',dest='gq'    ,default=1,   help='coupling to quarks')
 parser.add_option('--gdm'  ,action='store',type='float',dest='gdm'   ,default=1,   help='coupling to dark matter')
-parser.add_option('--label',action='store',type='string',dest='label',default='model2',help='eos label')
+parser.add_option('--label',action='store',type='string',dest='label',default='model',help='eos label')
 #parser.add_option('-MCFMGen' ,action='store',type='string',dest='mcfmg'   ,help='Location of MCFM Generation')
 #parser.add_option('-MCFMRaw' ,action='store',type='string',dest='mcfmr'   ,help='Location of MCFM un constrained gen')
 #parser.add_option('-eos'     ,action='store',type='string',dest='eos'     ,help='eos directory to store the samples in')
@@ -159,8 +159,8 @@ def getWidthXS(mass,med,width,process,gq,gdm,iYuk=True):
 def fileExists(filename,label):
    #cmsStage %s /store/cmst3/group/monojet/mc/%s/%s' %(filename,label,filename)
    sc=None
-   print '%s ls Xeos/cms//store/cmst3/group/monojet/mc/%s/%s | wc -l' %(eos,label,filename)
-   exists = commands.getoutput('%s ls Xeos/cms//store/cmst3/group/monojet/mc/%s/%s | wc -l' %(eos,label,filename)  )
+   print '%s ls eos/cms//store/cmst3/group/monojet/mc/%s/%s | wc -l' %(eos,label,filename)
+   exists = commands.getoutput('%s ls eos/cms//store/cmst3/group/monojet/mc/%s/%s | wc -l' %(eos,label,filename)  )
    if len(exists.splitlines()) > 1: 
       exists = exists.splitlines()[1]
    else:
@@ -168,7 +168,7 @@ def fileExists(filename,label):
    print exists
    return int(exists) == 1
    
-def loadmonojet(dm,med,width=1,proc=805,gq=1,gdm=1,label='model2',lhe=False):
+def loadmonojet(dm,med,width=1,proc=805,gq=1,gdm=1,label='model',lhe=False):
    filename='MonoJ_'+str(int(med))+'_'+str(int(dm))+'_'+str(int(width))+'_'+str(int(proc))+'.root'
    if fileExists(filename,label):
       os.system('cmsStage /store/cmst3/group/monojet/mc/%s/%s .' %(label,filename))
