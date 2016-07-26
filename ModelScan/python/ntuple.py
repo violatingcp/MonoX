@@ -148,6 +148,8 @@ def makeNtuple(iId,override,scale,label,DM,Med,Width,process,xst=[1,1],gq=1,gdm=
    f1PSigma[0]=lLTree.limit*scale
    lLTree.GetEntry(4)
    f2PSigma[0]=lLTree.limit*scale
+   lLTree.GetEntry(5)
+   fObs[0]=lLTree.limit*scale
    lFile.cd()
    lTree.Fill()
    lTree.Write()

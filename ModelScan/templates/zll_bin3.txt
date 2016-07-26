@@ -1,0 +1,42 @@
+imax 1 number of channels
+jmax * number of background
+kmax * number of nuisance parameters
+Observation 23
+bin hinvll1j13TeV20153 hinvll1j13TeV20153 hinvll1j13TeV20153 hinvll1j13TeV20153 hinvll1j13TeV20153 hinvll1j13TeV20153 hinvll1j13TeV20153
+process ZH_hinv Zjets VVV WZ ZZ EM ggZH_hinv
+process 0 1 2 3 4 5 -1
+rate  qqBin3  0.00000   0.06877   4.29169  11.90010   1.80317   ggBin3
+lumi2106_13TeV2015                           lnN  1.06200   -   1.06200 1.06200 1.06200   -   1.06200
+CMS_eff2016_m                                     lnN  1.02000   -   1.02000 1.02000 1.02000   -   1.02000
+CMS_eff2016_e                                     lnN  1.02000   -   1.02000 1.02000 1.02000   -   1.02000
+CMS_scale2016_m                                     lnN  1.01000   -   1.01000 1.01000 1.01000   -   1.01000
+CMS_scale2016_e                                     lnN  1.01000   -   1.01000 1.01000 1.01000   -   1.01000
+CMS_pu2016                             lnN  1.00328/1.00190   -   1.02000/0.98000 0.98726/1.01307 0.99368/1.00624   -   1.00328/1.00190
+CMS_scale_met                          lnN  0.99800/1.00200   -   0.99800/1.00200 0.99800/1.00200 0.99800/1.00200   -   0.99800/1.00200
+CMS_scale_j                            lnN  0.99513/1.00166   -   1.00276/1.01217 0.98889/1.00434 0.99572/1.00328   -   0.99513/1.00166
+UEPS			           lnN  1.030   -     -     -     -     -   1.030
+CMS_eff_b2016                          lnN  1.02000   -   1.02000 1.02000 1.02000   -   1.02000
+pdf_qqbar_ACCEPT                       lnN  1.00000   -   1.01868 1.01452 1.01393   -     -  
+pdf_qqbar                              lnN  1.01600   -     -     -     -     -     -  
+pdf_gg                                 lnN    -     -     -     -     -     -   1.05100
+QCDscale_VH_ACCEPT		         lnN  1.06908   -     -     -     -     -     -  
+QCDscale_VH		                 lnN  1.00000   -     -     -     -     -     -  
+QCDscale_ggVH		                 lnN    -     -     -     -     -     -   1.00000
+QCDscale_VVV		                 lnN    -     -   1.11164   -     -     -     -  
+QCDscale_VV		                 lnN    -     -     -   1.03289 1.02068   -     -  
+CMS_zllhinv_WZ_EWKCorr                 lnN    -     -     -   1.10000/0.90000   -      -    -  
+CMS_zllhinv_ZZ_EWKCorr                 lnN    -     -     -     -   1.09339/0.90661   -     -  
+CMS_zllhinv_ggZZCorr                   lnN    -     -     -     -   1.00609/0.99391   -     -  
+CMS_zllhinv_WZ_lep2016                 lnN     -	 -     -   1.01000   -	  -    -  
+CMS_zllhinv_WZ_tau2016                 lnN     -	 -     -   1.01200   -	  -    -  
+CMS_zllhinv_ZLLNorm2016_ll1j_13TeV2015              lnN	-   2.00000   -	  -     -     -     -  
+CMS_zllhinv_ZLLFit2016_ll1j_13TeV2015               lnU	-   2.00000   -	  -     -     -     -  
+CMS_zllhinv_EMSyst2016_ll1j_13TeV2015               lnN	-     -     -	  -     -   1.20000   -  
+CMS_zllhinv_EMNorm2016_ll1j_13TeV2015      gmN 33  	-     -     -	  -     -   0.05464   -  
+CMS_zllhinvll1j_MVAZHStatBounding2016_13TeV2015_Bin3	    lnN    1.04050 -      -    -    -    -     -  
+CMS_zllhinvll1j_MVAZjetsSatBounding2016_13TeV2015_Bin3  lnN      -  1.00000   -    -    -    -     -  
+CMS_zllhinvll1j_MVAVVVSatBounding2016_13TeV2015_Bin3    lnN      -	-  1.24240   -    -    -     -  
+CMS_zllhinvll1j_MVAWZSatBounding2016_13TeV2015_Bin3	    lnN      -	-     -  1.07011  -    -     -  
+CMS_zllhinvll1j_MVAZZSatBounding2016_13TeV2015_Bin3	    lnN      -	-     -    -  1.00676  -     -  
+CMS_zllhinvll1j_MVAEMSatBounding2016_13TeV2015_Bin3	    lnN      -	-     -    -    -  1.31240   -  
+CMS_zllhinvll1j_MVAggZHSatBounding2016_13TeV2015_Bin3   lnN      -    -     -    -    -    -   1.01163

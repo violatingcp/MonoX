@@ -5,45 +5,97 @@ from array import array
 
 #Available samples
 samples = { 
-    'ggH125_signal'           :[0,805,125,    1],  # Ntuple  : [Final State,Proc,med,DM]
-    'VBFH125_signal'          :[1,805,125,    1],
-    'WH125_signal'            :[2,805,125,    1],   
-    'ZH125_signal'            :[3,805,125,    1],
-    'ggH200_signal'           :[0,805,200,    1],
-    'VBFH200_signal'          :[1,805,200,    1],
-    'WH200_signal'            :[2,805,200,    1],
-    'ZH200_signal'            :[3,805,200,    1],
-    'ggH300_signal'           :[0,805,300,    1],
-    'VBFH300_signal'          :[1,805,300,    1],
-    'WH300_signal'            :[2,805,300,    1],
-    #'ZH300_signal'            :[3,805,300,    1],
-    'ggH400_signal'           :[0,805,400,    1],
-    'VBFH400_signal'          :[1,805,400,    1],
-    'WH400_signal'            :[2,805,400,    1],
-    'ZH400_signal'            :[3,805,400,    1],
-    'WDM1_D1_xip1_signal'     :[2,800,1001,   1], # The one forces reweighting
-    'ZDM1_D1_xip1_signal'     :[3,800,1001,   1], # needed to avoid no RW of EFT
-    'WDM1000_D1_xip1_signal'  :[2,800,1001,1000],
-    'ZDM1000_D1_xip1_signal'  :[3,800,1001,1000],
-    'MJDM0p1_C1_signal'       :[0,800,1001, 0.1],
-    'MJDM1_C1_signal'         :[0,800,1001,   1],
-    'MJDM10_C1_signal'        :[0,800,1001,  10],
-    #'MJDM200_C1_signal'       :[0,800,1001, 200],
-    'MJDM400_C1_signal'       :[0,800,1001, 400],
-    'MJDM700_C1_signal'       :[0,800,1001, 700],
-    #'MJDM0p1_C3_signal'       :[0,801,1001, 0.1],
-    'MJDM1_C3_signal'         :[0,801,1001,   1],
-    'MJDM100_C3_signal'       :[0,801,1001, 100],
-    #'MJDM200_C3_signal'       :[0,801,1001, 200],
-    'MJDM300_C3_signal'       :[0,801,1001, 300],
-    'MJDM400_C3_signal'       :[0,801,1001, 400],
-    'MJDM700_C3_signal'       :[0,801,1001, 700],
-    #'MJDM1_C5_signal'         :[0,807,1001,   1], # Don't use C5 right now its LO GGEFT
-    'MJDM100_C5_signal'       :[0,807,1001, 100],
-    'MJDM400_C5_signal'       :[0,807,1001, 400],
-    'MJDM700_C5_signal'       :[0,807,1001, 700],
-    #'MJDM10_PS125_signal'     :[0,806,125,   10],
-    #'MJDM10_S125_signal'      :[0,805,125,   10]
+    'tree_Vector_MonoJ300.root'                : [0,800,300,     1],
+    'tree_Vector_MonoJ300_1000.root'           : [0,800,500,     1],
+    'tree_Vector_MonoJ1000.root'               : [0,800,1000,    1],
+    'tree_Vector_MonoJoffshell.root'           : [0,800,1,   10000],
+
+    'tree_Axial_MonoJ300.root'                 : [0,801,300,     1],
+    'tree_Axial_MonoJ300_1000.root'            : [0,801,500,     1],
+    'tree_Axial_MonoJ1000.root'                : [0,801,1000,    1],
+    'tree_Axial_MonoJoffshell.root'            : [0,801,1,   10000],
+
+    'tree_Scalar_MonoJ_80X.root'               : [0,805,300,     1],
+    'tree_Scalar_MonoJ300_1000.root'           : [0,805,500,     1],
+    'tree_Scalar_MonoJ1000.root'               : [0,805,1000,    1],
+    'tree_Scalar_MonoJoffshell.root'           : [0,805,1,   10000],
+
+    'tree_Pseudoscalar_MonoJ300.root'          : [0,806,300,     1],
+    'tree_Pseudoscalar_MonoJ300_1000.root'     : [0,806,500,     1],
+    'tree_Pseudoscalar_MonoJ1000.root'         : [0,806,1000,    1],
+    'tree_Pseudoscalar_MonoJoffshell.root'     : [0,806,1,   10000],
+
+    'tree_Vector_MonoZ300.root'                : [23,800,300,     1],
+    'tree_Vector_MonoZ300_1000.root'           : [23,800,500,     1],
+    'tree_Vector_MonoZ1000.root'               : [23,800,1000,    1],
+    'tree_Vector_MonoZoffshell.root'           : [23,800,1,   10000],
+
+    'tree_Axial_MonoZ300.root'                 : [23,801,300,     1],
+    'tree_Axial_MonoZ300_1000.root'            : [23,801,700,     1],
+    'tree_Axial_MonoZ1000.root'                : [23,801,1500,    1],
+    'tree_Axial_MonoZoffshell.root'            : [23,801,1,   10000],
+
+    'tree_Scalar_MonoZ300.root'                : [23,805,300,     1],
+    'tree_Scalar_MonoZ300_1000.root'           : [23,805,700,     1],
+    #'tree_Scalar_MonoJ1000.root'               : [23,805,1000,    1],
+    'tree_Scalar_MonoZoffshell.root'           : [23,805,1,   10000],
+
+    'tree_Pseudoscalar_MonoZ300.root'          : [23,806,300,     1],
+    'tree_Pseudoscalar_MonoZ300_1000.root'     : [23,806,700,     1],
+    'tree_Pseudoscalar_MonoZ1000.root'         : [23,806,1500,    1],
+    'tree_Pseudoscalar_MonoZoffshell.root'     : [23,806,1,   10000],
+
+    'tree_Vector_MonoW300.root'                : [24,800,300,     1],
+    'tree_Vector_MonoW300_1000.root'           : [24,800,700,     1],
+    'tree_Vector_MonoW1000.root'               : [24,800,1500,    1],
+    'tree_Vector_MonoWoffshell.root'           : [24,800,1,   10000],
+
+    'tree_Axial_MonoW300.root'                 : [24,801,300,     1],
+    'tree_Axial_MonoW300_1000.root'            : [24,801,700,     1],
+    'tree_Axial_MonoW1000.root'                : [24,801,1500,    1],
+    'tree_Axial_MonoWoffshell.root'            : [24,801,1,   10000],
+
+    'tree_Scalar_MonoW300.root'                : [24,805,300,     1],
+    'tree_Scalar_MonoW300_1000.root'           : [24,805,700,     1],
+    'tree_Scalar_MonoW1000.root'               : [24,805,1500,    1],
+    'tree_Scalar_MonoWoffshell.root'           : [24,805,1,   10000],
+
+    'tree_Pseudoscalar_MonoW300.root'          : [24,806,300,     1],
+    'tree_Pseudoscalar_MonoW300_1000.root'     : [24,806,700,     1],
+    'tree_Pseudoscalar_MonoW1000.root'         : [24,806,1500,    1],
+    'tree_Pseudoscalar_MonoWoffshell.root'     : [24,806,1,   10000],
+
+    'tree_HiggsInv_VBF150.root'                : [ 1,805,150,     1],
+    'tree_HiggsInv_VBF150_200.root'            : [ 1,805,200,     1],
+    'tree_HiggsInv_VBF200_300.root'            : [ 1,805,300,     1],
+    'tree_HiggsInv_VBF300_400.root'            : [ 1,805,400,     1],
+    'tree_HiggsInv_VBF400_500.root'            : [ 1,805,500,     1],
+    'tree_HiggsInv_VBF500.root'                : [ 1,805,550,     1]
+
+#    'tree_Axial_MonoJ.root'                    : [0,801,10000, 50],
+#    'tree_Scalar_MonoJ.root'                   : [0,805,10000, 50],
+#    'tree_Pseudoscalar_MonoJ.root'             : [0,806,10000, 50],
+#    'tree_Vector_MonoW.root'                   : [24,800,10000, 50],
+#    'tree_Axial_MonoW.root'                    : [24,801,10000, 50],
+#    'tree_Scalar_MonoW.root'                   : [24,805,10000, 50],
+#    'tree_Pseudoscalar_MonoW.root'             : [24,806,10000, 50],
+#    'tree_Vector_MonoZ.root'                   : [23,800,10000, 50],
+#    'tree_Axial_MonoZ.root'                    : [23,801,10000, 50],
+#    'tree_Scalar_MonoZ.root'                   : [23,805,10000, 50],
+#    'tree_Pseudoscalar_MonoZ.root'             : [23,806,10000, 50],
+}
+
+samplesz = { 
+    'tree_Vector_MonoZLL100.root'                : [23,800,100,     1],
+    'tree_Vector_MonoZLL100_300.root'            : [23,800,250,     1],
+    'tree_Vector_MonoZLL300_1000.root'           : [23,800,500,     1],
+    'tree_Vector_MonoZLL1000.root'               : [23,800,1000,    1],
+    'tree_Vector_MonoZLLoffshell.root'           : [23,800,1,   10000],
+    'tree_Axial_MonoZLL100.root'                 : [23,801,100,     1],
+    'tree_Axial_MonoZLL100_300.root'             : [23,801,250,     1],
+    'tree_Axial_MonoZLL300_1000.root'            : [23,801,500,     1],
+    'tree_Axial_MonoZLL1000.root'                : [23,801,1000,    1],
+    'tree_Axial_MonoZLLoffshell.root'            : [23,801,1,   10000],
 }
 def filtered(iSamples,iEntry,iVal):
     oSamples = {}
@@ -62,7 +114,7 @@ def offshell(iSamples,iOffShell):
         entry = iSamples[sample]
         if entry[3] > entry[2]*0.5 and iOffShell:
             oSamples[sample]=entry    
-        if entry[3] < entry[2]*0.5 and not iOffShell:
+        if entry[3] < entry[2]*0.501 and not iOffShell:
             oSamples[sample]=entry    
     return oSamples
 
@@ -78,11 +130,21 @@ def nearest(iSamples,iEntry,iVal):
             baseVal=entry[iEntry]
     return filtered(iSamples,iEntry,baseVal)
 
+def convert(iName):
+    return 'tree'
+    lName=iName.replace("Vector"      ,"V")
+    lName=lName.replace("Axial"       ,"A")
+    lName=lName.replace("Scalar"      ,"S")
+    lName=lName.replace("Pseudoscalar","P")
+    lName=lName.replace("Mchi-","")
+    lName=lName.replace("Mphi-","")
+    lName=lName.replace("_0.root_0","")
+    return lName+"_signal"
+
 #Find the tree that is kinematic closest before reweighting
 def obtainbase(iId,dm,med,proc,hinv):
     #Step 1 Map Get all process with the right decay
     dDecay = filtered(samples,0,iId)
-
     #Step 2 filter by process
     dProcess = filtered(dDecay,1,proc)
     #Merge Pseudoscalar with Scalar
@@ -91,24 +153,28 @@ def obtainbase(iId,dm,med,proc,hinv):
     #Merge Vector/Axial and all flavors with Vector
     if len(dProcess) == 0 and (proc == 801 or proc == 810 or proc == 811 or proc == 820 or proc == 821):
         dProcess = filtered(dDecay,1,800)
+    #Just take whatever the hell we have for Mono-V
+    if len(dProcess) == 0 and iId > 1:
+        print "Mono-V Process missing"
+        dProcess = filtered(dDecay,1,800)
     if len(dProcess) == 0:
         print "Process not found!!!!",proc,iId
         output=['H125_Gen.root','ggH125_signal']
         return output
-    
+
     isExact = True
     #Step 3 filter by offshell or on shell
     dMass = offshell(dProcess,(dm > 0.5*med))
     if len(dMass) == 0: 
         isExact = False
-    if dm < med and len(dMass) == 0: #Default to onshell if ti fails
+    if dm < 10*med and len(dMass) == 0: #Default to onshell if ti fails
         dMass = offshell(dProcess,not (dm > 0.5*med))
-        
+    
     #Step 4 find the nearest Mediator
     dMed = filtered(dMass,2,med)
     if len(dMed) == 0: 
         isExact = False
-    dMed = nearest(dMass,2,med)
+        dMed = nearest(dMass,2,med)
     
     #Step 5 find the nearest DM candidate
     final = nearest(dMed,3,dm)
@@ -116,7 +182,53 @@ def obtainbase(iId,dm,med,proc,hinv):
         print "Ambiguous options",final
 
     print "final",final
-    output=[final.keys()[0]+'.root',final.keys()[0]]
+    output=[final.keys()[0],convert(final.keys()[0])]
+    #if isExact and hinv:
+    #    output[0]=''
+    return output
+
+
+def obtainbasez(iId,dm,med,proc,hinv):
+    #Step 1 Map Get all process with the right decay
+    dDecay = filtered(samplesz,0,iId)
+    #Step 2 filter by process
+    dProcess = filtered(dDecay,1,proc)
+    #Merge Pseudoscalar with Scalar
+    if len(dProcess) == 0 and (proc == 806 or proc == 805):
+        dProcess = filtered(dDecay,1,801)
+    #Merge Vector/Axial and all flavors with Vector
+    if len(dProcess) == 0 and (proc == 801 or proc == 810 or proc == 811 or proc == 820 or proc == 821):
+        dProcess = filtered(dDecay,1,800)
+    #Just take whatever the hell we have for Mono-V
+    if len(dProcess) == 0 and iId > 1:
+        print "Mono-V Process missing"
+        dProcess = filtered(dDecay,1,800)
+    if len(dProcess) == 0:
+        print "Process not found!!!!",proc,iId
+        output=['H125_Gen.root','ggH125_signal']
+        return output
+
+    isExact = True
+    #Step 3 filter by offshell or on shell
+    dMass = offshell(dProcess,(dm > 0.5*med))
+    if len(dMass) == 0: 
+        isExact = False
+    if dm < 10*med and len(dMass) == 0: #Default to onshell if ti fails
+        dMass = offshell(dProcess,not (dm > 0.5*med))
+    
+    #Step 4 find the nearest Mediator
+    dMed = filtered(dMass,2,med)
+    if len(dMed) == 0: 
+        isExact = False
+        dMed = nearest(dMass,2,med)
+    
+    #Step 5 find the nearest DM candidate
+    final = nearest(dMed,3,dm)
+    if len(final) > 1 : 
+        print "Ambiguous options",final
+
+    print "final",final
+    output=[final.keys()[0],'events']
     #if isExact and hinv:
     #    output[0]=''
     return output

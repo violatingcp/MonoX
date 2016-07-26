@@ -20,6 +20,7 @@ def parser():
    parser.add_option('--writeLHE',action='store_true',     dest='lhe'  ,default=False,help='write LHE as well')
    parser.add_option('--hinv'    ,action='store_true',     dest='hinv' ,default=False,help='Higgs Invisible') # need a few more options for monoV
    parser.add_option('--monoJ'   ,action='store_true',     dest='monoJ'   ,default=False,help='Just Monojet') # need a few more options for monoV
+   parser.add_option('--monoJMCFM',action='store_true',    dest='monoJMCFM',default=False,help='Just Monojet MCFM') # need a few more options for monoV
    parser.add_option('--monoJJ'  ,action='store_true',     dest='monoJJ'  ,default=False,help='dijet') # need a few more options for monoV
    parser.add_option('--mono1J'  ,action='store_true',     dest='mono1J'  ,default=False,help='one jet') # need a few more options for monoV
    parser.add_option('--monoS'   ,action='store_true',     dest='monoS'   ,default=False,help='750 jet') # need a few more options for monoV
@@ -313,6 +314,14 @@ def loadmonojet(dm,med,width=1,proc=805,gq=1,gdm=1,label='model3',lhe=False):
       xs=getPowhegXS(proc)
       generateGen(xs[0],filename,label,False)
 
+def loadmonojetMCFM(dm,med,width=1,proc=805,gq=1,gdm=1,label='model3',lhe=False):
+   filename='MonoJ_'+str(int(med))+'_'+str(int(dm))+'_'+str(gq)+"_"+str(gdm)+'_'+str(int(proc))+'_mcfm.root'
+   if fileExists(filename,label):
+      os.system('cmsStage /store/cmst3/group/monojet/mc/%s/%s .' %(label,filename))
+   else:
+      generateMonoJetMCFM(dm,med,width,proc,gq,gdm,lhe)
+      generateGen(1.,filename,label,False)
+
 def loadonejet(dm,med,width=1,proc=805,gq=1,gdm=1,label='model3',lhe=False):
    filename='Mono1J_'+str(int(med))+'_'+str(int(dm))+'_'+str(gq)+'_'+str(int(proc))+'.root'
    if fileExists(filename,label):
@@ -419,6 +428,10 @@ if __name__ == "__main__":
 
     if options.monoJJ:
        loaddijet(options.dm,options.med,options.width,options.proc,options.gq,options.gdm,options.label,options.lhe)
+       exit()
+
+    if options.monoJMCFM:
+       loadmonojetMCFM(options.dm,options.med,options.width,options.proc,options.gq,options.gdm,options.label,options.lhe)
        exit()
 
     if options.mono1J:
