@@ -137,6 +137,10 @@ def reweight(label,DM,Med,Width,gq,gdm,process,basentuple,basename,basecut,basec
       weight1="xs"
       if process < 802 or monoGGZ:
          weight1=weight1+"2"
+         if process < 802:#Correcting for Majorana
+            weight1=weight1+"*2" 
+         if process < 802 and Med < 350:
+            weight1=weight1+"*7.0/4.9"#Correction for rounding in top width
       if process > 802 and not monoGGZ:
          weight1=weight1+"*"+str(getXS(Med,iVId))
       weight1=weight1+"*1000*"+basecut.replace("23","23")+"*"

@@ -63,16 +63,16 @@ aparser = argparse.ArgumentParser()
 #aparser.add_argument('-dm' ,'--dmrange'   ,nargs='+',type=int,default=[600,700,800,900,1000,1250,1500,1750,2000])
 #aparser.add_argument('-dm' ,'--dmrange'   ,nargs='+',type=int,default=[300,325,350,400,500,600,700,800,900,1000,1250,1500,1750,2000])
 #aparser.add_argument('-dm' ,'--dmrange'   ,nargs='+',type=int,default=[100,125,150,175,200,225,250,275,300,300,325,350,400,500,600,700,800,900,1000,1250,1500,1750,2000])
-#aparser.add_argument('-dm' ,'--dmrange'   ,nargs='+',type=int,default=[1,5,10,15,20,25,30,35,40,45,50,60,75,80,100,125,150,175,200,225,250,275,300,300,325,350,400,500,600,700,800,900,1000,1250,1500,1750,2000])
-aparser.add_argument('-dm' ,'--dmrange'   ,nargs='+',type=int,default=[1])
+aparser.add_argument('-dm' ,'--dmrange'   ,nargs='+',type=int,default=[1,5,10,15,20,25,30,35,40,45,50,60,75,80,100,125,150,175,200,225,250,275,300,300,325,350,400,500,600,700,800,900,1000,1250,1500,1750,2000])
+#aparser.add_argument('-dm' ,'--dmrange'   ,nargs='+',type=int,default=[1])
 #aparser.add_argument('-dm' ,'--dmrange'   ,nargs='+',type=int,default=[75,80,100,125,150,175,200,225,250,275,300,300,325,350,400,500,600,700,800,900,1000,1250,1500,1750,2000])
 #aparser.add_argument('-dm' ,'--dmrange'   ,nargs='+',type=int,default=[150,200,300,400,500,600,700,800,900,1000,1250,1500,1750,2000])
 #aparser.add_argument('-dm' ,'--dmrange'   ,nargs='+',type=int,default=[1000,1250,1500,1750,2000,10000])
 #aparser.add_argument('-dm' ,'--dmrange'   ,nargs='+',type=int,default=[1,10,300,325,350,360,370,374])
 #aparser.add_argument('-dm' ,'--dmrange'   ,nargs='+',type=int,default=[1])
 #aparser.add_argument('-dm' ,'--dmrange'   ,nargs='+',type=int,default=[1])
-#aparser.add_argument('-med','--medrange'  ,nargs='+',type=int,default=[1,5,10,20,30,40,50,60,70,80,90,100,125,150,175,200,225,250,275,300,325,350,400,500,525,600,725,800,925,1000,1125,1200,1250,1325,1400,1500,1525,1600,1725,1800,1925,2000,2500,3000,3500,4000,5000])
-aparser.add_argument('-med','--medrange'  ,nargs='+',type=int,default=[200])
+aparser.add_argument('-med','--medrange'  ,nargs='+',type=int,default=[1,5,10,20,30,40,50,60,70,80,90,100,125,150,175,200,225,250,275,300,325,350,400,500,525,600,725,800,925,1000,1125,1200,1250,1325,1400,1500,1525,1600,1725,1800,1925,2000,2500,3000,3500,4000,5000])
+#aparser.add_argument('-med','--medrange'  ,nargs='+',type=int,default=[200])
 #aparser.add_argument('-med','--medrange'  ,nargs='+',type=int,default=[2500,3000,3500,4000,5000,6000,7000])
 #aparser.add_argument('-med','--medrange'  ,nargs='+',type=int,default=[1000,1250,1500,2000,2500,3000,3500,4000,5000,6000,7000])
 #aparser.add_argument('-med','--medrange'  ,nargs='+',type=int,default=[10,25,50,75,100,125,150,200,250,300,400,500,600,800,1000,1200,1600,2000,3000,4000,5000])
@@ -106,7 +106,9 @@ args = aparser.parse_args()
 label=''
 option=''
 generate=False
+limit=False
 reweight=False
+
 if args.options[0].find('--monoV') > 0:
     label='_1'
     option='--monoV'
@@ -167,6 +169,10 @@ if args.options[0].find('--monoJMCFM') > 0:
     label='_15'
     option='--monoJMCFM'
 
+if args.options[0].find('--monoV') > 0 and args.options[0].find('--monoGGZ') > 0 :
+    label='_16'
+    option='--monoV --monoGGZ'
+
 if args.options[0].find('--generate') > 0:
     label=label+'g'
     generate=True
@@ -174,6 +180,10 @@ if args.options[0].find('--generate') > 0:
 if args.options[0].find('--reweight') > 0:
     label=label+'r'
     reweight=True
+
+if args.options[0].find('--limit') > 0:
+    label=label+'l'
+    limit=True
 
 print option,"Submitting by ",args.mod[0]
 counter=0
@@ -188,7 +198,7 @@ for dm in args.dmrange:
                  for gdm in args.gdmrange:
                     if option == '--hinv' and (proc==800 or proc==801 or proc > 809 or dm != 1):
                        continue
-                    if generate or reweight:
+                    if generate or reweight or limit:
                     #width=0.25
                        procstr='V_'
                        if proc == 801:
@@ -225,11 +235,11 @@ for dm in args.dmrange:
                           checkFileName='monoggz_'+str(int(med))+'_'+str(int(dm))+'_'+str(gq)+'_'+str(int(proc))+'.root'
                        if label.find('_15') > -1:
                           checkFileName='monoj_'+str(int(med))+'_'+str(int(dm))+'_'+str(gq)+'_'+str(gdm)+'_'+str(int(proc))+'_mcfm.root'
-                       #if fileExists(checkFileName,'model3_v2/'):
-                       #   continue
+                       if fileExists(checkFileName,'model3_v2/'):
+                          continue
                        #if localFileExists(checkFileName):
                        #   continue
-                       if not generate:
+                       if not generate and not limit:
                           #if localFileExists('model_'+str(int(med))+'_'+str(int(dm))+'_'+str(width)+'_'+str(int(proc))+'_0.root'):
                           #if fileExists(checkFileName,'model4/'):
                           #   continue
@@ -258,9 +268,9 @@ for dm in args.dmrange:
                           if not checks[2]:
                              sub_file.write('./reweight.py --dm %s --med %s --width %s --proc %s --gq %s --gdm %s --monoZ \n' % (dm,med,width,proc,gq,gdm))
                        else:
-                          sub_file.write('cp %s/limit.py . \n'%os.getcwd()) 
+                          sub_file.write('cp %s/limit_z.py . \n'%os.getcwd()) 
                           sub_file.write('rm *.root        \n')
-                          sub_file.write('./limit.py    --dm %s --med %s --width %s --proc %s %s \n' % (dm,med,width,proc,option))
+                          sub_file.write('./limit_z.py  --dm %s --med %s --width %s --proc %s %s \n' % (dm,med,width,proc,option))
                           if submit and not reweight:
                              sub_file.write('hadd model_%s_%s_%s_%s_%s.rootX model_*.rootX \n' % (dm,med,width,proc,label))
                              sub_file.write('mv model_%s_%s_%s_%s_%s.rootX %s/Output/ \n' % (dm,med,width,proc,label,basedir))
