@@ -63,13 +63,11 @@ def setupCard(iVFile,iGFile):
    if iVFile != '':
       lVFile = r.TFile(iVFile+".root")
       lQQH   = lVFile.Get(iVFile+"_mononz")
-      #lVFile  = r.TFile("events.root")
-      #lQQH    = lVFile.Get("events_mononz")
       
    if iGFile != '':
       lGFile = r.TFile(iGFile+".root")
-      lGGH   = lFile.Get(iGFile+"_monoz")
-
+      lGGH   = lGFile.Get(iGFile+"_mononz")
+       
    os.system('cp %s/templates/*.txt .' % basedir)
    for i0 in range(0,7):
       lYield0 = 0
@@ -77,7 +75,7 @@ def setupCard(iVFile,iGFile):
       if iVFile != '':
          lYield0 = lQQH.GetBinContent(i0+1)
       if iGFile != '':
-         lYield1 = lGGH.GetBinContent(i0+1)
+          lYield1 = lGGH.GetBinContent(i0+1)
       replace('zll_bin%s.txt' % i0,i0,lYield0,lYield1)
 
 def treeName(proc,med,dm,gq,gdm,iId,monoGGZ):
@@ -104,7 +102,9 @@ def fullresults(label,med,dm,width,proc,g,gdm,ggZ):
    lVFile=treeName(proc,med,dm,g,gdm,23,False)
    lGFile=''
    if proc > 802 and ggZ:
+      lVFile=''
       lGFile=treeName(proc,med,dm,g,gdm,23,True)
+      proc=proc+2
    setupCard(lVFile,lGFile)
    scale=runlimit('zll*.txt' ,basedir)
    xst=makeNtuple(0,True,1.,label,dm,med,width,proc,xst,gq,gdm,1.)
