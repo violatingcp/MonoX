@@ -12,7 +12,7 @@ boosted     ='1.0*(fjm > 40 && fjm < 112 && fjpt > 150 && fjt2t1 < 0.6)*'+mjcut
 monoz       ='0.067*1.1' # the factor of two is because the Z' DM model is majorana, the 1.1 based on closure
 monojetReco ='weight'#*(genAK4JetPt > 100)*(genAK8JetMass < 60 || genAK8JetMass > 112 || genAK8JetPt < 250)'
 boostedReco ='1.*(genAK8JetMass > 40 && genAK8JetMass < 112 && genAK8JetPt > 150 && genAK8JetTau2Tau1 < 0.6)'
-monozReco   = 'mcWeight'
+monozReco   ='1.0'#mcWeight'
 
 mvrbins = [250,300,350,400,500,600,1000]
 mvgbins = [100.,150.,200.,250,300,350,400,500,600,1000]

@@ -46,13 +46,13 @@ def getXS(iMed,iId,basedir='/afs/cern.ch/user/p/pharris/pharris/public/bacon/pro
     return lG.Eval(iMed)*lScale.Eval(scale)*BRCorr
 
 def end():
-    if __name__ == '__main__':
-        rep = ''
-        while not rep in [ 'q', 'Q','a',' ' ]:
-            rep = raw_input( 'enter "q" to quit: ' )
-            if 1 < len(rep):
-                rep = rep[0]
-
+   #if __name__ == '__main__':
+   rep = ''
+   while not rep in [ 'q', 'Q','a',' ' ]:
+      rep = raw_input( 'enter "q" to quit: ' )
+      if 1 < len(rep):
+         rep = rep[0]
+         
 def fixNorm(filename,treename,cut):
    lFile = ROOT.TFile(filename)
    lTree = lFile.Get(treename)
@@ -90,7 +90,7 @@ def makeHist(filename,var,baseweight,treename,label,normalize='',iMonoVBin=False
 def makeFile(filename,treename,var='metP4.Pt()'): #pfMetPt
    outfilename=treename+".root"
    lFile = ROOT.TFile(outfilename,"RECREATE")
-   h1=makeHist(filename,var,mzrcut+"*newWeight*mcWeight",treename,treename+'_mononz','',0)
+   h1=makeHist(filename,var,mzrcut+"*newWeight",treename,treename+'_mononz','',0)
    h1.SetBinContent(h1.GetNbinsX(),h1.GetBinContent(h1.GetNbinsX())+h1.GetBinContent(h1.GetNbinsX()+1))
    lFile.cd()
    h1.Write()
@@ -134,32 +134,29 @@ def reweight(label,DM,Med,Width,gq,gdm,process,basentuple,basename,basecut,basec
          label=label.replace("MonoJ","MonoGGZ")
       else:
          label=label.replace("MonoJ","MonoV")
+      
       weight1="xs"
       if process < 802 or monoGGZ:
          weight1=weight1+"2"
-         if process < 802:#Correcting for Majorana
-            weight1=weight1+"*2" 
+         #if process < 802:#Correcting for Majorana
+         #   weight1=weight1+"*2" 
          if process < 802 and Med < 350:
             weight1=weight1+"*7.0/4.9"#Correction for rounding in top width
       if process > 802 and not monoGGZ:
          weight1=weight1+"*"+str(getXS(Med,iVId))
+      if abs(iVId) == 23:
+         weight2=weight2+"*(genPdgId==23)"
       weight1=weight1+"*1000*"+basecut.replace("23","23")+"*"
       Norm1='(abs(v_id) == '+str(iVId)+')'
-   print label,"!!!!"   
    h1=makeHist(label     ,var1,weight1+Norm1,'Events','model',Norm1,useMonoVBin)
    h2=makeHist(basentuple,var2,weight2+Norm2,basename,'base' ,Norm2,useMonoVBin)           
+   print h1.Integral()
    if int(iVId) == 23 and process < 802:
       h1.Scale(1./fixNorm(label,"Events",Norm1))
    #h1.Scale(h2.Integral()/h1.Integral())
+   h1.Divide(h2)
    os.system('mv %s old' % label)
    print "Yields",h1.Integral(),h2.Integral()
-   can= ROOT.TCanvas("C","C",800,600)
-   h1.Draw()
-   h2.SetLineColor(ROOT.kRed)
-   h2.Draw("sames")
-   h1.Divide(h2)
-   h1.Draw()
-   end()
    lOFile = ROOT.TFile(iOutputName,'RECREATE')
    h1.Write()
    lOFile.Close()
@@ -199,6 +196,7 @@ def reweightNtuple(iFile,iTreeName,iHistName,iOTreeName,iClass,iMonoV,iHiggsPt=F
       for i1 in range(0,lTree.genP4.GetEntries()):
          if lTree.genPdgId[i1] == 23:
             genpt = lTree.genP4[i1].Pt()
+            
       if genpt > 400:
          genpt = 395
       if genpt < 5:
@@ -207,6 +205,7 @@ def reweightNtuple(iFile,iTreeName,iHistName,iOTreeName,iClass,iMonoV,iHiggsPt=F
       #w2[0] = lTree.mcWeight
       w2[0] = h1.GetBinContent(h1.FindBin(genpt))*baseweight
       #w1[0] = w1[0] * w2[0]
+      #print i0,genpt,w2[0]
       lOTree.Fill()
    lOTree.Write()
    lOFile.Close()
