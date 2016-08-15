@@ -20,10 +20,12 @@ def parser():
    parser.add_option('--writeLHE',action='store_true',     dest='lhe'  ,default=False,help='write LHE as well')
    parser.add_option('--hinv'    ,action='store_true',     dest='hinv' ,default=False,help='Higgs Invisible') # need a few more options for monoV
    parser.add_option('--monoJ'   ,action='store_true',     dest='monoJ'   ,default=False,help='Just Monojet') # need a few more options for monoV
+   parser.add_option('--monoJMCFM',action='store_true',    dest='monoJMCFM',default=False,help='Just Monojet MCFM') # need a few more options for monoV
    parser.add_option('--monoJJ'  ,action='store_true',     dest='monoJJ'  ,default=False,help='dijet') # need a few more options for monoV
    parser.add_option('--mono1J'  ,action='store_true',     dest='mono1J'  ,default=False,help='one jet') # need a few more options for monoV
    parser.add_option('--monoS'   ,action='store_true',     dest='monoS'   ,default=False,help='750 jet') # need a few more options for monoV
    parser.add_option('--monoGGZ' ,action='store_true',     dest='monoGGZ' ,default=False,help='ggPhiZ jet') # need a few more options for monoV
+   parser.add_option('--monoTop' ,action='store_true',     dest='monoTop' ,default=False,help='top + MET') # need a few more options for monoV
    parser.add_option('--dijet'   ,action='store_true',     dest='dijet'   ,default=False,help='dijet resonance') # need a few more options for monoV
    parser.add_option('--dijetzp' ,action='store_true',     dest='dijetzp' ,default=False,help='dijet resonance') # need a few more options for monoV
    parser.add_option('--mj'      ,action='store',          dest='mj'      ,default='ggH125_signal',help='Monojet Base') # need a few more options for monoV
@@ -122,6 +124,11 @@ def generateMonoGGZ(mass,med,width,process,gq,gdm):
    os.system('cp -r  /afs/cern.ch/user/p/pharris/pharris/public/bacon/Darkmatter/runMG13_MonoZ.sh .')
    os.system('chmod +x runMG13_MonoZ.sh')
    os.system('./runMG13_MonoZ.sh %d %d %f %d %d %f ' % (med,mass,gq,process,1,gdm))
+
+def generateMonoTop(mass,med,width,process,gq,gdm):
+   os.system('cp -r  /afs/cern.ch/user/p/pharris/pharris/public/bacon/Darkmatter/runMG13_MonoTop.sh .')
+   os.system('chmod +x runMG13_MonoTop.sh')
+   os.system('./runMG13_MonoTop.sh %d %d %f %d %d %f ' % (med,mass,gq,process,1,gdm))
 
 def generateDiJetMG(mass,med,width,process,gq,gdm):
    os.system('cp -r  /afs/cern.ch/user/p/pharris/pharris/public/bacon/Darkmatter/runMGJJ.sh .')
@@ -313,6 +320,14 @@ def loadmonojet(dm,med,width=1,proc=805,gq=1,gdm=1,label='model3',lhe=False):
       xs=getPowhegXS(proc)
       generateGen(xs[0],filename,label,False)
 
+def loadmonojetMCFM(dm,med,width=1,proc=805,gq=1,gdm=1,label='model3',lhe=False):
+   filename='MonoJ_'+str(int(med))+'_'+str(int(dm))+'_'+str(gq)+"_"+str(gdm)+'_'+str(int(proc))+'_mcfm.root'
+   if fileExists(filename,label):
+      os.system('cmsStage /store/cmst3/group/monojet/mc/%s/%s .' %(label,filename))
+   else:
+      generateMonoJetMCFM(dm,med,width,proc,gq,gdm,lhe)
+      generateGen(1.,filename,label,False)
+
 def loadonejet(dm,med,width=1,proc=805,gq=1,gdm=1,label='model3',lhe=False):
    filename='Mono1J_'+str(int(med))+'_'+str(int(dm))+'_'+str(gq)+'_'+str(int(proc))+'.root'
    if fileExists(filename,label):
@@ -335,6 +350,14 @@ def loadmonoggz(dm,med,width=1,proc=805,gq=1,gdm=1,label='model3',lhe=False):
       os.system('cmsStage /store/cmst3/group/monojet/mc/%s/%s .' %(label,filename))
    else:
       generateMonoGGZ(dm,med,width,proc,gq,gdm)
+      generateGen(-1,filename,label,False)
+
+def loadmonotop(dm,med,width=1,proc=805,gq=1,gdm=1,label='model3',lhe=False):
+   filename='MonoTop_'+str(int(med))+'_'+str(int(dm))+'_'+str(gq)+"_"+str(gdm)+'_'+str(int(proc))+'.root'
+   if fileExists(filename,label):
+      os.system('cmsStage /store/cmst3/group/monojet/mc/%s/%s .' %(label,filename))
+   else:
+      generateMonoTop(dm,med,width,proc,gq,gdm)
       generateGen(-1,filename,label,False)
 
 def loaddijet(dm,med,width=1,proc=805,gq=1,gdm=1,label='model3',lhe=False):
@@ -421,6 +444,10 @@ if __name__ == "__main__":
        loaddijet(options.dm,options.med,options.width,options.proc,options.gq,options.gdm,options.label,options.lhe)
        exit()
 
+    if options.monoJMCFM:
+       loadmonojetMCFM(options.dm,options.med,options.width,options.proc,options.gq,options.gdm,options.label,options.lhe)
+       exit()
+
     if options.mono1J:
        loadonejet(options.dm,options.med,options.width,options.proc,options.gq,options.gdm,options.label,options.lhe)
        exit()
@@ -431,6 +458,10 @@ if __name__ == "__main__":
 
     if options.monoGGZ:
        loadmonoggz(options.dm,options.med,options.width,options.proc,options.gq,options.gdm,options.label,options.lhe)
+       exit()
+
+    if options.monoTop:
+       loadmonotop(options.dm,options.med,options.width,options.proc,options.gq,options.gdm,options.label,options.lhe)
        exit()
 
     if not options.monov : 

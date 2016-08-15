@@ -53,7 +53,7 @@ def ntuplexs(filename,treename):
 
 def makeNtuple(iId,override,scale,label,DM,Med,Width,process,xst=[1,1],gq=1,gdm=1,BR=1):
    #Declare file
-   lFile  = r.TFile('%s_%s_%s_%s_%s_%s.rootX '%(label,str(int(Med)),str(int(DM)),str(int(Width)),str(int(process)),iId),'RECREATE')
+   lFile  = r.TFile('%s_%s_%s_%s_%s_%s_%s.rootX '%(label,str(int(Med)),str(int(DM)),str(gq),str(gdm),str(int(process)),iId),'RECREATE')
    lTree  = r.TTree("limit","limit");
    #Coordinates
    fId    = numpy.zeros(1, dtype=int)

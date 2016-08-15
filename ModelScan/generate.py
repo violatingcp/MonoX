@@ -25,6 +25,7 @@ def parser():
    parser.add_option('--mono1J'  ,action='store_true',     dest='mono1J'  ,default=False,help='one jet') # need a few more options for monoV
    parser.add_option('--monoS'   ,action='store_true',     dest='monoS'   ,default=False,help='750 jet') # need a few more options for monoV
    parser.add_option('--monoGGZ' ,action='store_true',     dest='monoGGZ' ,default=False,help='ggPhiZ jet') # need a few more options for monoV
+   parser.add_option('--monoTop' ,action='store_true',     dest='monoTop' ,default=False,help='top + MET') # need a few more options for monoV
    parser.add_option('--dijet'   ,action='store_true',     dest='dijet'   ,default=False,help='dijet resonance') # need a few more options for monoV
    parser.add_option('--dijetzp' ,action='store_true',     dest='dijetzp' ,default=False,help='dijet resonance') # need a few more options for monoV
    parser.add_option('--mj'      ,action='store',          dest='mj'      ,default='ggH125_signal',help='Monojet Base') # need a few more options for monoV
@@ -123,6 +124,11 @@ def generateMonoGGZ(mass,med,width,process,gq,gdm):
    os.system('cp -r  /afs/cern.ch/user/p/pharris/pharris/public/bacon/Darkmatter/runMG13_MonoZ.sh .')
    os.system('chmod +x runMG13_MonoZ.sh')
    os.system('./runMG13_MonoZ.sh %d %d %f %d %d %f ' % (med,mass,gq,process,1,gdm))
+
+def generateMonoTop(mass,med,width,process,gq,gdm):
+   os.system('cp -r  /afs/cern.ch/user/p/pharris/pharris/public/bacon/Darkmatter/runMG13_MonoTop.sh .')
+   os.system('chmod +x runMG13_MonoTop.sh')
+   os.system('./runMG13_MonoTop.sh %d %d %f %d %d %f ' % (med,mass,gq,process,1,gdm))
 
 def generateDiJetMG(mass,med,width,process,gq,gdm):
    os.system('cp -r  /afs/cern.ch/user/p/pharris/pharris/public/bacon/Darkmatter/runMGJJ.sh .')
@@ -225,9 +231,9 @@ def generateGen(xs,filename,label,monoV,dty="/afs/cern.ch/user/p/pharris/pharris
    elif filename.find("MonoS") > -1:
       cmscfg='LHEProd_MLM2.py'
       os.system('cp %s/Hadronizer_TuneCUETP8M1_13TeV_generic_LHE_pythia8_cff_MLM2.py .'%dty)   
-   elif filename.find("zprime") > -1:
-      cmscfg='LHEProd_MLM4.py'
-      os.system('cp %s/Hadronizer_TuneCUETP8M1_13TeV_generic_LHE_pythia8_cff_MLM4.py .'%dty)   
+  # elif filename.find("zprime") > -1:
+      #cmscfg='LHEProd_MLM4.py'
+      #os.system('cp %s/Hadronizer_TuneCUETP8M1_13TeV_generic_LHE_pythia8_cff_MLM4.py .'%dty)   
    else:
       cmscfg='LHEProd.py'
       os.system('cp %s/Hadronizer_TuneCUETP8M1_13TeV_generic_LHE_pythia8_cff.py .'%dty)   
@@ -346,6 +352,14 @@ def loadmonoggz(dm,med,width=1,proc=805,gq=1,gdm=1,label='model3',lhe=False):
       generateMonoGGZ(dm,med,width,proc,gq,gdm)
       generateGen(-1,filename,label,False)
 
+def loadmonotop(dm,med,width=1,proc=805,gq=1,gdm=1,label='model3',lhe=False):
+   filename='MonoTop_'+str(int(med))+'_'+str(int(dm))+'_'+str(gq)+"_"+str(gdm)+'_'+str(int(proc))+'.root'
+   if fileExists(filename,label):
+      os.system('cmsStage /store/cmst3/group/monojet/mc/%s/%s .' %(label,filename))
+   else:
+      generateMonoTop(dm,med,width,proc,gq,gdm)
+      generateGen(-1,filename,label,False)
+
 def loaddijet(dm,med,width=1,proc=805,gq=1,gdm=1,label='model3',lhe=False):
    #filename='MonoJ_'+str(int(med))+'_'+str(int(dm))+'_'+str(int(width))+'_'+str(int(proc))+'_8TeV.root'
    filename='MonoJJ_'+str(int(med))+'_'+str(int(dm))+'_'+str(gq)+'_'+str(int(proc))+'.root'
@@ -444,6 +458,10 @@ if __name__ == "__main__":
 
     if options.monoGGZ:
        loadmonoggz(options.dm,options.med,options.width,options.proc,options.gq,options.gdm,options.label,options.lhe)
+       exit()
+
+    if options.monoTop:
+       loadmonotop(options.dm,options.med,options.width,options.proc,options.gq,options.gdm,options.label,options.lhe)
        exit()
 
     if not options.monov : 
